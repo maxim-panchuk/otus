@@ -10,7 +10,7 @@ func Top10(t string) []string {
 	m := make(map[string]int)
 
 	for _, word := range wordList {
-		m[word] += 1
+		m[word]++
 	}
 
 	type kv struct {
