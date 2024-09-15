@@ -8,6 +8,37 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestUnpackPositive(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{input: "b4c0", expected: "bbbb"},
+		{input: "b4c0c", expected: "bbbbc"},
+		{input: "b4c0c0", expected: "bbbb"},
+		{input: "b2c2", expected: "bbcc"},
+	}
+	for _, tc := range tests {
+		tc := tc
+		t.Run(tc.input, func(t *testing.T) {
+			r, err := Unpack(tc.input)
+			require.NoError(t, err)
+			require.Equal(t, tc.expected, r)
+		})
+	}
+}
+
+func TestUnpackNegative(t *testing.T) {
+	invalidStringList := []string{"34", "4c", "v34"}
+	for _, tc := range invalidStringList {
+		tc := tc
+		t.Run(tc, func(t *testing.T) {
+			_, err := Unpack(tc)
+			require.Truef(t, errors.Is(err, ErrInvalidString), "actual error %q", err)
+		})
+	}
+}
+
 func TestUnpack(t *testing.T) {
 	tests := []struct {
 		input    string
