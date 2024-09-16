@@ -3,6 +3,7 @@ package hw03frequencyanalysis
 import (
 	"testing"
 
+	//nolint:depguard
 	"github.com/stretchr/testify/require"
 )
 
@@ -42,6 +43,29 @@ var text = `Как видите, он  спускается  по  лестни�
 	иногда,  особенно  когда  папа  дома,  он больше любит тихонько
 	посидеть у огня и послушать какую-нибудь интересную сказку.
 		В этот вечер...`
+
+var text1 = `I am a passionate Unity Developer with over five years of 
+	experience in game development, currently working toward becoming a 
+	Senior Unity Developer. Throughout my journey, I’ve created several 
+	projects for desktop, mobile, and VR platforms, leveraging my deep 
+	understanding of design patterns and best coding practices. I’m 
+	particularly skilled in C#, Unity, and game optimization, and have 
+	worked on both freelance and full-time projects in the industry.
+	I’ve participated in multiple indie game showcases, receiving 
+	valuable feedback from players and peers. These experiences, 
+	combined with my strong foundation in software engineering from 
+	ITMO University, allow me to deliver efficient, engaging games 
+	that resonate with users. I am also a lifelong gamer, staying 
+	current with trends and developments in the gaming world, which 
+	enhances my ability to create games that excite players.
+`
+
+func TestTop(t *testing.T) {
+	t.Run("positive one", func(t *testing.T) {
+		expected := []string{"and", "in", "my", "with", "a", "game", "I", "I’ve", "Unity", "am"}
+		require.Equal(t, expected, Top10(text1))
+	})
+}
 
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {
